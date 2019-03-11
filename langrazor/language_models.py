@@ -32,11 +32,15 @@ def append_universe(list):
 
 
 #model_name in the universe should be unique
-def check_existance(model_name):
+def check_existance(model_name, path_return = False):
     universe = load_universe()
     if model_name in universe.model_name.values :
-        return(1)
-    return(0)
+        if path_return == True:
+            path = "data/language/" + str(universe.loc[universe.model_name == model_name].lang_id.values[0]) + "/" + str(universe.loc[universe.model_name == model_name].file_name.values[0])
+            return(path)
+        else:
+            return(True)
+    return(False)
 
 
 def add_model(model_name, path,lang_id):
@@ -46,10 +50,3 @@ def add_model(model_name, path,lang_id):
         append_universe(append_row)
     else:
         raise ValueError(f'{model_name} already exists in language_universe')
-
-
-
-
-
-add_model("achyut","achy","en")
-print(check_existance("achyut"))
